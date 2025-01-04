@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #a72878;
+    color: #fff;
+}
+
+.logo {
+    /* background: url('https://tse2.mm.bing.net/th/id/OIP.cHUcQOCI737G9sdGwXxFggHaEo?rs=1&pid=ImgDetMain') no-repeat center center/cover; */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.hero {
+    background: url('https://tse2.mm.bing.net/th/id/OIP.cHUcQOCI737G9sdGwXxFggHaEo?rs=1&pid=ImgDetMain') no-repeat center center/cover;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 0 20px;
+}
+
+
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cta-btn {
+    padding: 10px 30px;
+    background-color: #a72878;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #218838;
+}
+
+.features {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.feature-list {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.feature {
+    width: 250px;
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #343A40;
+    color: white;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer .social-icons a {
+    margin-right: 10px;
+}
