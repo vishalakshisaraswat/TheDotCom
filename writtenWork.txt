@@ -1,0 +1,79 @@
+T = TANISHKA
+V = VISHALAKSHI
+S = SHAMBHAWI
+K = SRISHTY KASHYAP
+
+For an in-house software project, the following documents are typically required:
+
+1 Project Proposal:
+
+Overview    T 
+Objectives  T
+Scope   S
+Stakeholders    K
+Budget and timeline V
+
+2 Requirement Specifications:
+
+Functional requirements     T
+Non-functional requirements    S
+Use cases   K
+User stories   V
+
+3 Project Plan:
+
+Work breakdown structure (WBS)    T
+Gantt chart  K
+Milestones and deliverables   S
+Risk management plan   V
+
+4 Design Documentation:
+
+System architecture   V
+Data flow diagrams (DFD)   S
+Entity-relationship diagrams (ERD)   K
+UI/UX design mockups   T
+
+5 Technical Specifications:
+
+Software and hardware requirements   S
+Database schema    T
+API documentation   V
+
+-------------------- AFTER IMPLEMENTATION -------------------------
+
+6 Development Documentation:
+
+Code comments and documentation
+Version control logs
+Unit tests and test cases
+
+7 Testing Documentation:
+
+Test plan
+Test cases
+Bug reports
+User acceptance testing (UAT) results
+
+8 Deployment Plan:
+
+Deployment strategy
+Rollback plan
+Deployment scripts
+
+9 User Manuals:
+
+End-user manual
+Administrator manual
+
+10 Maintenance and Support Plan:
+
+Maintenance schedule
+Support contact information
+Troubleshooting guide
+
+11 Final Report:
+
+Project summary
+Lessons learned
+Future recommendations
