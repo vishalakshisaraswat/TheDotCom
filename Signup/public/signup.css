@@ -6,7 +6,10 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #f7f7f7;
+      background-color: #ddebfd;
+      /* background-image: url('https://cdn.pixabay.com/photo/2020/02/09/17/58/white-border-4834033_960_720.jpg'); */
+      /* background-image: url('https://thumbs.dreamstime.com/b/blue-vector-endless-pattern-created-thin-undulate-stripes-circles-seamless-composition-continuous-interlace-texture-can-85128971.jpg'); */
+      background-size: contain;
     }
 
     .form-container {
@@ -22,7 +25,7 @@
     .form-container h1 {
       font-size: 40px;
       margin-bottom: 30px;
-      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-family:Nunito,  sans-serif;
       color: #000000;
     }
 
@@ -44,7 +47,7 @@
     .form-container button {
       width: 100%;
       padding: 10px;
-      background-color: #17a97d;
+      background-color: #0d83fd;
       color: white;
       border: none;
       border-radius: 5px;
@@ -53,18 +56,18 @@
     }
 
     .form-container button:hover {
-      background-color: #b6dfd3;
+      background-color: #accaea;
     }
 
     .form-container .link {
       margin-top: 10px;
       font-size: 14px;
-      color: #17a97d;
+      color: #0d83fd;
     }
 
     .form-container .link a {
       text-decoration: none;
-      color: #17a97d;
+      color: #0d83fd;
     }
 
     .form-container .link a:hover {
