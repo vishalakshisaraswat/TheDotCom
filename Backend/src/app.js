@@ -1,3 +1,4 @@
+//to run this code in terminal
 //node src/app.js
 require('dotenv').config();
 const express = require('express');
