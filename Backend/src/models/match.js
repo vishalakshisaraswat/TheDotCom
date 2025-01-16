@@ -13,14 +13,12 @@ const matchSchema = new mongoose.Schema({
     type: Number, 
     required: true
     },
-  userId1: { 
-    type: String, 
-    ref: 'User', 
+  profileId1: { 
+    type: profile_id,  
     required: true
    },
-  userId2: { 
-    type: String, 
-    ref: 'User', 
+  profileId2: { 
+    type: profile_id, 
     required: true 
    },
 }, { timestamps: true }); 
