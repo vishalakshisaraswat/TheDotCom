@@ -1,0 +1,47 @@
+{
+  "aadhaar": [
+    {
+      "aadhaar": "123456789012",
+      "otp": "654321",
+      "status": "OTP Sent",
+      "id": "3a14"
+    },
+    {
+      "aadhaar": "122334455667",
+      "otp": 869405,
+      "status": "OTP Sent",
+      "id": "7929"
+    },
+    {
+      "id": "7b68",
+      "aadhaar": "122334455667",
+      "otp": 547945,
+      "status": "OTP Sent"
+    },
+    {
+      "id": "332f",
+      "aadhaar": "123456789012",
+      "otp": 806431,
+      "status": "OTP Sent"
+    },
+    {
+      "id": "76f8",
+      "aadhaar": "123456789012",
+      "otp": 558076,
+      "status": "OTP Sent"
+    },
+    {
+      "id": "68b5",
+      "aadhaar": "123456789012",
+      "otp": 580933,
+      "status": "OTP Sent"
+    },
+    {
+      "id": "40f7",
+      "aadhaar": "123456789012",
+      "otp": 697789,
+      "status": "OTP Sent"
+    }
+  ],
+  "otp": []
+}
