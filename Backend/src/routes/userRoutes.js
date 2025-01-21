@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 
 const router = express.Router();
@@ -20,6 +21,12 @@ router.post('/signup', async (req, res) => {
           .json({ message: 'Password must be greater than 8 and less than 20 characters.' });
       }
 
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+      
+
     const saltRounds = 10; 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -32,13 +39,12 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+router.get('/verification', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/verification.html'));  
+})
+
 //login page
-router.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/login.html')); 
-});
-
-//login
-
+// Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -47,24 +53,23 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    // Find the user by email
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Compare provided password with hashed password in the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'Invalid password' }); 
     }
 
-    // Login successful
-    res.sendFile(path.join(__dirname, '../views/main.html')); // Redirect to a success page or dashboard
+    // Generate JWT Token
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log('JWT_SECRET:', process.env.JWT_SECRET);
+//yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
-    res.status(500).json({ message: 'Error during login', error: err });
+    res.status(500).json({ message: 'Error during login', error: err.message });
   }
 });
 

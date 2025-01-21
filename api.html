@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map with Place Search</title>
+  
+  <!-- Leaflet.js CSS for styling the map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+
+    /* Styling for the search input */
+    #search-box {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      padding: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>Search a Place and Move the Map</h3>
+  
+  <!-- Search Box -->
+  <input id="search-box" type="text" placeholder="Enter a place name" />
+
+  <!-- Div where the map will be rendered -->
+  <div id="map"></div>
+
+  <!-- Leaflet.js library -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+  <script>
+    // Initialize the map centered at a default location (San Francisco)
+    var map = L.map('map').setView([37.7749, -122.4194], 10);
+
+    // Add OpenStreetMap tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a default marker
+    var marker = L.marker([37.7749, -122.4194]).addTo(map);
+    marker.bindPopup("<b>San Francisco</b>").openPopup();
+
+    // Geocode function to get coordinates from a place name
+    function geocodePlace(place) {
+      var url = `https://nominatim.openstreetmap.org/search?format=json&q=${place}`;
+      
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length > 0) {
+            var lat = data[0].lat;
+            var lon = data[0].lon;
+            var placeName = data[0].display_name;
+
+            // Move the map to the new location
+            map.setView([lat, lon], 10);
+
+            // Add or move the marker to the new location
+            marker.setLatLng([lat, lon]);
+            marker.bindPopup(`<b>${placeName}</b>`).openPopup();
+          } else {
+            alert("Place not found, please try again.");
+          }
+        })
+        .catch(error => {
+          console.error("Error geocoding place:", error);
+        });
+    }
+
+    // Listen for input in the search box
+    document.getElementById('search-box').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        var place = event.target.value;
+        if (place.trim() !== "") {
+          geocodePlace(place);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
