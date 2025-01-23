@@ -33,7 +33,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ email, password: hashedPassword });
     await newUser.save();
 
-    res.sendFile(path.join(__dirname, '../views/success.html'));
+    res.sendFile(path.join(__dirname, '../../../Frontend/views/success.html'));
   } catch (err) {
     res.status(500).json({ message: 'Error saving user', error: err });
   }
@@ -61,7 +61,10 @@ router.post('/login', async (req, res) => {
     // Generate JWT Token
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-    res.status(200).json({ message: 'Login successful', token });
+    res.cookie('authToken', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.redirect('profile.html');
+
+    // res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     res.status(500).json({ message: 'Error during login', error: err.message });
   }

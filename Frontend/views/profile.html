@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('authToken='))?.split('=')[1];
+
+      if (token) {
+        console.log('User is logged in, token:', token);
+        
+        // Fetch user profile using the token
+        fetch('/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => res.json())
+        .then(data => {
+          // Populate profile information dynamically
+          document.getElementById('username').innerText = data.profileName;
+          document.getElementById('gender').innerText = data.gender;
+          document.getElementById('languages').innerText = data.languages.join(', ');
+          document.getElementById('address').innerText = data.address;
+          document.getElementById('age').innerText = data.age;
+          document.getElementById('description').innerText = data.description || 'No description available';
+        })
+        .catch(err => {
+          console.log('Error fetching profile:', err);
+        });
+      } else {
+        // Redirect to login if no token is found
+        window.location.href = '/login.html';
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <h1>Welcome, <span id="profileName">Loading...</span></h1>
+
+  <form id="profile-form">
+    <h1>Profile Details</h1>
+
+    <label for="profileName"><h3>Full Name:</h3></label>
+    <input type="text" id="profileName" name="profileName" placeholder="Enter your name" required>
+
+    <h3>Select your Gender:</h3>
+    <div class="gender-container">
+        <label><input type="radio" name="gender" value="Male"> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+        <label><input type="radio" name="gender" value="Other"> Other</label>
+    </div><br>
+
+    <h3>User Type:</h3>
+    <label><input type="radio" name="userType" value="roommateSeekerWithRoom"> Roommate Seeker With Room </label>
+    <label><input type="radio" name="userType" value="roommateSeekerWithoutRoom"> Roommate Seeker Without Room </label>
+
+    <label for="age"><h3>Age:</h3></label>
+    <input type="number" id="age" name="age" placeholder="Enter your age" required>
+
+    <h3>Choose Languages You Are Comfortable With:</h3>
+    <label><input type="checkbox" name="languages" value="Hindi"> Hindi</label>
+    <label><input type="checkbox" name="languages" value="English"> English</label>
+    <label><input type="checkbox" name="languages" value="Other" onclick="toggleOtherLanguage(true)"> Other</label>
+
+    <div id="other-language-container" style="display: none; margin-top: 10px;">
+      <label for="other-language">Please specify:</label>
+      <textarea id="other-language" name="languages" rows="3" cols="30" placeholder="Enter your preferred language"></textarea>
+    </div>
+
+    <label for="address"><h3>Address:</h3></label>
+    <input type="text" id="address" name="address" placeholder="Enter your address" required>
+
+    <label for="description"><h3>Description:</h3></label>
+    <textarea id="description" name="description" placeholder="Enter a short description" rows="4"></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function toggleOtherLanguage(show) {
+      const otherLanguageContainer = document.getElementById('other-language-container');
+      otherLanguageContainer.style.display = show ? 'block' : 'none';
+    }
+
+    document.getElementById('profile-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = {
+        profileName: document.getElementById('profileName').value,
+        gender: document.querySelector('input[name="gender"]:checked').value,
+        userType: document.querySelector('input[name="userType"]:checked').value,
+        age: document.getElementById('age').value,
+        address: document.getElementById('address').value,
+        description: document.getElementById('description').value,
+        languages: Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(input => input.value)
+      };
+
+      fetch('/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Profile submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error submitting profile:', error);
+      });
+    });
+  </script>
+
+</body>
+</html>

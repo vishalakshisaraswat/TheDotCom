@@ -9,10 +9,10 @@ router.post('/create', auth, async (req, res) => {
     profileName,
     address,
     gender,
-    languages, // Updated to match the 'languages' array field in the model
+    languages, 
     age,
     userType,
-    description, // Optional field
+    description, 
   } = req.body;
 
   try {
