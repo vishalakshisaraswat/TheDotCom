@@ -39,12 +39,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.get('/verification', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/verification.html'));  
-})
-
-//login page
-// Login
+//login 
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -64,9 +59,8 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate JWT Token
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    console.log('JWT_SECRET:', process.env.JWT_SECRET);
-//yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     res.status(500).json({ message: 'Error during login', error: err.message });

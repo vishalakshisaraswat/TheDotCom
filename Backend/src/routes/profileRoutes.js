@@ -9,21 +9,22 @@ router.post('/create', auth, async (req, res) => {
     profileName,
     address,
     gender,
-    language,
+    languages, // Updated to match the 'languages' array field in the model
     age,
     userType,
+    description, // Optional field
   } = req.body;
 
   try {
-    // Use req.user.userId to get the userId from the authenticated user
+    // Create a new profile using the validated input
     const newProfile = new Profile({
       profileName,
-      userId: req.user.userId, // Extract userId from the authenticated user
       address,
       gender,
-      language,
+      languages, // Save the array of languages
       age,
       userType,
+      description, // Include optional description
     });
 
     await newProfile.save();
@@ -42,5 +43,19 @@ router.get('/', async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+// Get Profile by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+    if (!profile) {
+      return res.status(404).json({ message: 'Profile not found' });
+    }
+    res.status(200).json(profile);
+  } catch (error) {
+    res.status(400).json({ message: 'Invalid profile ID' });
+  }
+});
+
 
 module.exports = router;
