@@ -1,34 +1,18 @@
-require('dotenv').config();
 const express = require('express');
-const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
-const profileRoutes = require('./routes/profileRoutes');
-const roomRoutes = require('./routes/roomRoutes');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const cors = require('cors'); // Added for CORS support
 
 const app = express();
 const PORT = 5500;
 
-// Connect to database
-connectDB();
-
-// Middleware
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../../Frontend/views')));
-app.use(cookieParser());
 
-// OTP and User Data Storage (temporary in-memory stores)
 const otpStore = {};
-const userStore = {};
+const userStore = {}; // Store user information temporarily
 
-// Nodemailer transporter configuration
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
@@ -37,7 +21,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Routes
+// Send OTP
 app.post('/send-otp', (req, res) => {
   const { email } = req.body;
 
@@ -64,6 +48,7 @@ app.post('/send-otp', (req, res) => {
   });
 });
 
+// Verify OTP
 app.post('/verify-otp', (req, res) => {
   const { email, otp } = req.body;
 
@@ -75,21 +60,15 @@ app.post('/verify-otp', (req, res) => {
 
   if (storedOtp && storedOtp === otp) {
     delete otpStore[email];
-
-    // Store user information
-    userStore[email] = req.body;
+    
+    // Proceed to store user information
+    userStore[email] = req.body; // Save user information
     return res.status(200).json({ message: 'OTP verified successfully!' });
   }
 
   res.status(400).json({ error: 'Invalid or expired OTP.' });
 });
 
-// User, Profile, and Room Routes
-app.use('/', userRoutes);
-app.use('/profile', profileRoutes);
-app.use('/rooms', roomRoutes);
-
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
