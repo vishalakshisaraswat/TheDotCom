@@ -1,11 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyRoommate.com Profiles</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 90%;
+      max-width: 1200px;
+    }
+    .profile-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .profile-card:hover {
+      transform: translateY(-5px);
+    }
+    .profile-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .profile-content {
+      padding: 15px;
+    }
+    .profile-name {
+      font-size: 1.5rem;
+      margin: 0;
+      color: #333;
+    }
+    .profile-details {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>login Successful Welcome to Application.</h1>
+  <h1>Roommate Profiles</h1>
+  <div class="container">
+    <div class="profile-card" data-location="New York, NY" data-name="Alex Johnson" data-age="27" data-profession="Software Engineer" data-preference="Non-smoker, No pets" data-about="I love hiking and cooking in my free time. Looking for a roommate who values cleanliness." data-image="https://randomuser.me/api/portraits/men/32.jpg">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Alex Johnson" class="profile-image">
+      <div class="profile-content">
+        <h2 class="profile-name">Alex Johnson</h2>
+        <p class="profile-details">Age: 27 | Software Engineer | New York, NY</p>
+        <p class="profile-details">Looking for: Non-smoker, No pets</p>
+        <p class="profile-details">About Me: I love hiking and cooking in my free time. Looking for a roommate who values cleanliness.</p>
+      </div>
+    </div>
+
+    <div class="profile-card" data-location="San Francisco, CA" data-name="Sophia Lee" data-age="24" data-profession="Graphic Designer" data-preference="Pet-friendly, Quiet roommate" data-about="Creative and easy-going, I enjoy painting and yoga. Hoping to find a respectful roommate." data-image="https://randomuser.me/api/portraits/women/44.jpg">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophia Lee" class="profile-image">
+      <div class="profile-content">
+        <h2 class="profile-name">Sophia Lee</h2>
+        <p class="profile-details">Age: 24 | Graphic Designer | San Francisco, CA</p>
+        <p class="profile-details">Looking for: Pet-friendly, Quiet roommate</p>
+        <p class="profile-details">About Me: Creative and easy-going, I enjoy painting and yoga. Hoping to find a respectful roommate.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle profile card click
+    document.querySelectorAll('.profile-card').forEach(card => {
+      card.addEventListener('click', function () {
+        const profileData = {
+          name: this.dataset.name,
+          age: this.dataset.age,
+          profession: this.dataset.profession,
+          preference: this.dataset.preference,
+          about: this.dataset.about,
+          location: this.dataset.location,
+          image: this.dataset.image  // Store image URL as well
+        };
+        sessionStorage.setItem('profileData', JSON.stringify(profileData));
+        window.location.href = 'nw.html';  // Redirect to profile details page
+      });
+    });
+  </script>
 </body>
 </html>
