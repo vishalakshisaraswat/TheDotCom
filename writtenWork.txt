@@ -83,3 +83,4 @@ Future recommendations
 for server.js  dependencies
 npm install express nodemailer body-parser crypto
 npm install cors
+npm i dotenv
