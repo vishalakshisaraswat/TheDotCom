@@ -6,21 +6,27 @@
   <title>Create Account</title>
   <link rel="stylesheet" href="./signup.css">
   <script src="signup.js"></script>
-
-  
 </head>
 <body>
   <div class="form-container">
     <h1>You're just one click away to find a perfect roommate!</h1>
     <p>Please Create a strong password of length more than 8 and less than 20.</p>
-    <form method="post" action="http://localhost:5500/signup">
-      <input type="email" name="email" placeholder="Email address" required>
+    <form id="signupForm" method="post">
+      <input type="email" id="email" name="email" placeholder="Email address" required>
       <input type="password" name="password" placeholder="Create a Strong password" required>
       <button type="submit">Continue</button>
     </form>
+
+    <form id="otpVerifyForm" style="display: none;">
+      <label for="otp">Enter OTP:</label>
+      <input type="text" id="otp" required>
+      <button type="submit">Verify OTP</button>
+    </form>
+
     <div class="link">
       <p>Already have an account? <a href="./login.html">Log in</a></p>
     </div>
+
     <div class="divider">
       <span>OR</span>
     </div>
@@ -29,9 +35,56 @@
       Continue with Google
     </button>
   </div>
-</body>
-</html>
 
-    </div>
+  <script>
+    const signupForm = document.getElementById('signupForm');
+    const otpVerifyForm = document.getElementById('otpVerifyForm');
+    const emailInput = document.getElementById('email');
+    const otpInput = document.getElementById('otp');
+
+    // Handle signup form submission
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      const password = document.querySelector('input[name="password"]').value;
+
+      // Send OTP request
+      const response = await fetch('http://localhost:3000/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        signupForm.style.display = 'none';
+        otpVerifyForm.style.display = 'block';
+      } else {
+        alert(result.error);
+      }
+    });
+
+    // Handle OTP verification
+    otpVerifyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      const otp = otpInput.value;
+
+      const response = await fetch('http://localhost:3000/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('OTP verified successfully! You can now proceed with signup.');
+        // Proceed with actual signup logic here (e.g., saving user data)
+      } else {
+        alert(result.error);
+      }
+    });
+  </script>
 </body>
 </html>
