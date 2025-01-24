@@ -13,7 +13,7 @@
     <p>Please Create a strong password of length more than 8 and less than 20.</p>
     <form id="signupForm" method="post">
       <input type="email" id="email" name="email" placeholder="Email address" required>
-      <input type="password" id="password" name="password" placeholder="Create a Strong password" required>
+      <input type="password" name="password" placeholder="Create a Strong password" required>
       <button type="submit">Continue</button>
     </form>
 
@@ -46,7 +46,7 @@
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = emailInput.value;
-      const password = document.getElementById('password').value;
+      const password = document.querySelector('input[name="password"]').value;
 
       // Send OTP request
       const response = await fetch('http://localhost:3000/send-otp', {
@@ -79,8 +79,8 @@
 
       const result = await response.json();
       if (response.ok) {
-        alert('OTP verified successfully! Redirecting to login page...');
-        window.location.href = './login.html'; // Redirect to login page
+        alert('OTP verified successfully! You can now proceed with signup.');
+        // Proceed with actual signup logic here (e.g., saving user data)
       } else {
         alert(result.error);
       }
