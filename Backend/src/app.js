@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const roomRoutes = require('./routes/roomRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -88,6 +89,7 @@ app.post('/verify-otp', (req, res) => {
 app.use('/', userRoutes);
 app.use('/profile', profileRoutes);
 app.use('/rooms', roomRoutes);
+app.use('/expense',expenseRoutes);
 
 // Start server
 app.listen(PORT, () => {
