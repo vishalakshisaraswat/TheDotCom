@@ -81,6 +81,7 @@ Future recommendations
 
 
 for server.js  dependencies
+npm i uuid jsonwebtoken
 npm install express nodemailer body-parser crypto
 npm install cors
 npm i dotenv
