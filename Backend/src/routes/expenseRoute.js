@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const Expense = require("../models/expense");
+const Expense = require('../models/expense');
 const auth = require("../middleware/auth");
 
 // Create Expense
